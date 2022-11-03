@@ -1,5 +1,7 @@
-# listas-dinamicas-c
+# Listas dinamicas em liguagem C
 
+
+## Pilha
 ```c
 #include <stdio.h>
 #include <conio.h>
