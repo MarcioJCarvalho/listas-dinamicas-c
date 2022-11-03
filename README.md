@@ -104,3 +104,127 @@ void main()
 	return;
 }
 ```
+
+## Fila
+```c
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+typedef struct no{
+    int dado;
+    struct no *proximo;
+}no;
+
+typedef struct fila{
+    no *inicio;
+    no *fim 
+}fila;
+
+
+void fila_init(fila *f){
+    f->inicio = NULL;
+}
+
+void enfileirar(int dado, fila *f){
+    no *ponteiro = (no*)malloc(sizeof(no)); // alocamento do novo nó
+    if(ponteiro == NULL){
+        printf("Erro de alocação. \n");
+        return;
+    } else {
+        ponteiro->dado = dado;
+        ponteiro->proximo = NULL; // evita erros em tempo de execução
+        // verifica de o inicio da fila é nulo
+        if(f->inicio == NULL){
+            f->inicio = ponteiro;
+        } else {
+            f-> fim->proximo = ponteiro;
+        }
+        
+        f->fim = ponteiro; // para qualquer inserção na fila
+        return;
+    }
+}
+
+int desenfileira(fila *f){
+    no *ponteiro = f->inicio;
+    int dado;
+    if(ponteiro != NULL){
+        f->inicio = ponteiro->proximo;
+        ponteiro->proximo = NULL;
+        dado = ponteiro->dado;
+        free(ponteiro); // desaloca memoria
+        if(f->inicio == NULL){
+            f->fim = NULL;
+        }
+        return dado;
+    } else {
+        printf("Fila esta vazia!. \n");
+        return 0;
+    }
+}
+
+void listar_fila(fila *f){
+    no *ponteiro = f->inicio; // inicializa o ponteiro
+    if(ponteiro != NULL){
+        while(ponteiro != NULL){
+            printf("%d ", ponteiro->dado);
+            ponteiro = ponteiro->proximo;
+        }
+        printf("\n");
+    } else {
+        printf("Fila esta vazia!. \n");
+        return;
+    }
+}
+
+
+void main()
+{
+    char opcao;
+    int valor; 
+    fila *fl = (fila*)malloc(sizeof(fila)); 
+    if(fl == NULL){
+        printf("Erro de alocação da fila. \n");
+        exit(0);
+    } else {
+        fila_init(fl);
+    }
+    
+    // menu
+	while (opcao!='S' && opcao!='s')
+	{
+	  printf("[I]ncluir [D]eletar [S]air\n");
+	  scanf("%c ", &opcao);
+	  if (opcao=='i' || opcao=='I')     
+	  {
+	    printf("Valor para incluir na fila: \n"); 
+	    scanf("%d ", &valor);
+	    enfileirar(valor, fl);
+	    listar_fila(fl);
+	  } 
+	  else if (opcao=='d' || opcao=='D')
+	  {
+  		desenfileira(fl);
+  		listar_fila(fl);
+	  }
+	  else if (opcao=='s' || opcao=='S')
+	  {
+	    printf("Finalizando...");  
+      } else {
+          printf("Opção inválida!. \n");
+      }
+     
+	}
+	system ("clear");//limpa tela
+	return;
+}
+```
